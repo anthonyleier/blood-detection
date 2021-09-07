@@ -1,5 +1,6 @@
-/models/research/object_detection/test_data/checkpoint
-/models/research/object_detection/test_data/saved_model
-/models/research/object_detection/test_data/pipeline.config
+/bccd
 /dataset
-/down
+/duck
+/results
+/tensorflow
+/models
