@@ -71,7 +71,7 @@ for imagem_path, coordenada_path in tupla[:tamanho_treino]:
     for celula in celulas:
         nome = "cell_" + str(contador)
         copyfile(imagem_path, f"./dataset-multiple/train/imagens/{nome}.jpg")
-        arquivo = open(f"./dataset-multiple/train/info/{nome}.txt", "w")
+        arquivo = open(f"./dataset-multiple/train/coordenadas/{nome}.txt", "w")
         arquivo.write(str(celula[0]) + "\n")
         arquivo.write(str(celula[1]) + "\n")
         arquivo.write(str(celula[2]) + "\n")
@@ -84,7 +84,7 @@ print("Preparando imagens de teste...")
 for imagem_path, coordenada_path in tupla[tamanho_treino:]:
     nome = "cell_" + str(contador)
     copyfile(imagem_path, f"./dataset-multiple/test/imagens/{nome}.jpg")
-    copyfile(coordenada_path, f"./dataset-multiple/test/info/{nome}.xml")
+    copyfile(coordenada_path, f"./dataset-multiple/test/coordenadas/{nome}.xml")
     contador = contador + 1
 
 print("Dataset carregado com sucesso")
