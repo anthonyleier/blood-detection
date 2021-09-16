@@ -21,7 +21,7 @@ def coletarContagemTXT(path):
     arquivo = open(path, "r")
     return int(arquivo.readlines()[1])
 
-coordenadas_dir = "./dataset/test/coordenadas/"
+coordenadas_dir = "./dataset-single/test/coordenadas/"
 coordenadas_path = []
 
 dados_dir = "./results/info/"

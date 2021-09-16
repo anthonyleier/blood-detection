@@ -70,8 +70,8 @@ for imagem_path, coordenada_path in tupla[:tamanho_treino]:
     celulas = infoCelulas(coordenada_path)
     for celula in celulas:
         nome = "cell_" + str(contador)
-        copyfile(imagem_path, f"./datasetNovo/train/{nome}.jpg")
-        arquivo = open(f"./datasetNovo/train/{nome}.txt", "w")
+        copyfile(imagem_path, f"./dataset-multiple/train/imagens/{nome}.jpg")
+        arquivo = open(f"./dataset-multiple/train/info/{nome}.txt", "w")
         arquivo.write(str(celula[0]) + "\n")
         arquivo.write(str(celula[1]) + "\n")
         arquivo.write(str(celula[2]) + "\n")
@@ -85,8 +85,8 @@ for imagem_path, coordenada_path in tupla[tamanho_treino:]:
     celulas = infoCelulas(coordenada_path)
     for celula in celulas:
         nome = "cell_" + str(contador)
-        copyfile(imagem_path, f"./datasetNovo/test/{nome}.jpg")
-        arquivo = open(f"./datasetNovo/test/{nome}.txt", "w")
+        copyfile(imagem_path, f"./dataset-multiple/test/imagens/{nome}.jpg")
+        arquivo = open(f"./dataset-multiple/test/info/{nome}.txt", "w")
         arquivo.write(str(celula[0]) + "\n")
         arquivo.write(str(celula[1]) + "\n")
         arquivo.write(str(celula[2]) + "\n")

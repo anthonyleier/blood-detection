@@ -57,16 +57,16 @@ print(tupla[0])
 print("Carregando imagens de treino...")
 for grupo in tupla[:tamanho_treino]:
     if(encontraWBC(grupo[2])):
-        copyfile(grupo[1], "./dataset/train/imagens/" + grupo[0] + ".jpg")
-        copyfile(grupo[2], "./dataset/train/coordenadas/" + grupo[0] + ".xml")
+        copyfile(grupo[1], "./dataset-single/train/imagens/" + grupo[0] + ".jpg")
+        copyfile(grupo[2], "./dataset-single/train/coordenadas/" + grupo[0] + ".xml")
     else:
         print("Não encontrado no treino")
 
 print("Carregando imagens de teste...")
 for grupo in tupla[tamanho_treino:]:
     if(encontraWBC(grupo[2])):
-        copyfile(grupo[1], "./dataset/test/imagens/" + grupo[0] + ".jpg")
-        copyfile(grupo[2], "./dataset/test/coordenadas/" + grupo[0] + ".xml")
+        copyfile(grupo[1], "./dataset-single/test/imagens/" + grupo[0] + ".jpg")
+        copyfile(grupo[2], "./dataset-single/test/coordenadas/" + grupo[0] + ".xml")
     else:
         print("Não encontrado no teste")
 
