@@ -54,20 +54,20 @@ tupla = zip(nomes, imagens_path, coordenadas_path)
 tupla = tuple(tupla)
 print(tupla[0])
 
-print("Carregando imagens de treino...")
+print("Preparando imagens de treino...")
 for grupo in tupla[:tamanho_treino]:
     if(encontraWBC(grupo[2])):
         copyfile(grupo[1], "./dataset-single/train/imagens/" + grupo[0] + ".jpg")
         copyfile(grupo[2], "./dataset-single/train/coordenadas/" + grupo[0] + ".xml")
     else:
-        print("Não encontrado no treino")
+        print("WBC nao encontrada na imagem:", grupo[0])
 
-print("Carregando imagens de teste...")
+print("Preparando imagens de teste...")
 for grupo in tupla[tamanho_treino:]:
     if(encontraWBC(grupo[2])):
         copyfile(grupo[1], "./dataset-single/test/imagens/" + grupo[0] + ".jpg")
         copyfile(grupo[2], "./dataset-single/test/coordenadas/" + grupo[0] + ".xml")
     else:
-        print("Não encontrado no teste")
+        print("WBC nao encontrada na imagem:", grupo[0])
 
 print("Dataset carregado com sucesso")

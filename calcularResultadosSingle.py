@@ -24,7 +24,7 @@ def coletarContagemTXT(path):
 coordenadas_dir = "./dataset-single/test/coordenadas/"
 coordenadas_path = []
 
-dados_dir = "./results/info/"
+dados_dir = "./results/single/info/"
 dados_path = []
 
 test_y = []
@@ -69,7 +69,7 @@ print(total)
 print(acertos)
 print(erros)
 
-arquivo = open("relatorio.txt", "w")
+arquivo = open("relatorio-single.txt", "w")
 arquivo.write(total + "\n")
 arquivo.write(acertos + "\n")
 arquivo.write(erros + "\n")
