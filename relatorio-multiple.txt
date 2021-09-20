@@ -1,12 +1,14 @@
-Total WBC: 74 (100%)
-Acertos WBC: 0 (0.0%)
-Erros WBC: 1 (1.35%)
+WBC
+Total: 74
+Encontrados: 26
+Porcentagem: 26/74 (35.14%)
 
-Total RBC: 908 (100%)
-Acertos RBC: 11 (1.21%)
-Erros RBC: 4 (0.44%)
+RBC
+Total: 908
+Encontrados: 896
+Porcentagem: 896/908 (98.68%)
 
-Total Platelets: 59 (100%)
-Acertos Platelets: 2 (3.39%)
-Erros Platelets: 0 (0.0%)
-
+Platelets
+Total: 59
+Encontrados: 2
+Porcentagem: 2/59 (3.39%)

@@ -33,156 +33,118 @@ def infoCelulas(arquivo):
 
     return celulas
 
-def contarCelulasXML(lista):
-    contador_wbc = 0
-    contador_rbc = 0
-    contador_platelets = 0
+coordenadas_dir = "dataset-multiple/test/coordenadas/"
+celulas_arq = []
 
-    for celula in lista:
-        if celula[0] == "WBC":
-            contador_wbc = contador_wbc + 1
-        if celula[0] == "RBC":
-            contador_rbc = contador_rbc + 1
-        if celula[0] == "Platelets":
-            contador_platelets = contador_platelets + 1
-    
-    return contador_wbc, contador_rbc, contador_platelets
-
-coordenadas_dir = "./dataset-multiple/test/coordenadas/"
-coordenadas_path = []
-
-dados_dir = "./results/multiple/info/"
-dados_path = []
-
-test_y_wbc = []
-predict_y_wbc = []
-
-test_y_rbc = []
-predict_y_rbc = []
-
-test_y_platelets = []
-predict_y_platelets = []
+teste = 0
 
 for arquivo in os.listdir(coordenadas_dir):
-    coordenadas_path.append(coordenadas_dir + arquivo)
+    celulas_arq.append(infoCelulas(coordenadas_dir + arquivo))
 
-for arquivo in os.listdir(dados_dir):
-    dados_path.append(dados_dir + arquivo)
+print(celulas_arq[teste])
 
-for arquivo in coordenadas_path:
-    test_y_wbc.append(contarCelulasXML(infoCelulas(arquivo))[0])
+def contador(celulas_arq):
+    count_wbc = 0
+    count_rbc = 0
+    count_platelets = 0
 
-for arquivo in coordenadas_path:
-    test_y_rbc.append(contarCelulasXML(infoCelulas(arquivo))[1])
+    for celula in celulas_arq:
+        nome = celula[0]
+        if nome == "WBC":
+            count_wbc = count_wbc + 1
+        elif nome == "RBC":
+            count_rbc =  count_rbc + 1
+        elif nome == "Platelets":
+            count_platelets =  count_platelets + 1
 
-for arquivo in coordenadas_path:
-    test_y_platelets.append(contarCelulasXML(infoCelulas(arquivo))[2])
+        count = [count_wbc, count_rbc, count_platelets]
+        
+    return count
 
-for arquivo in dados_path:
-    file = open(arquivo, "r")
-    predict_y_wbc.append(int(file.readlines()[1].replace("\n","")))    
-    file.close()
+print(contador(celulas_arq[teste]))
 
-for arquivo in dados_path:
-    file = open(arquivo, "r")
-    predict_y_rbc.append(int(file.readlines()[3].replace("\n","")))
-    file.close()
+contadores_teste = []
 
-for arquivo in dados_path:
-    file = open(arquivo, "r")
-    predict_y_platelets.append(int(file.readlines()[5].replace("\n","")))
-    file.close()
+for elemento in celulas_arq:
+    contadores_teste.append(contador(elemento))
 
-total_wbc = 0
-total_rbc = 0
-total_platelets = 0
+info_dir = "results/multiple/info/"
+contadores_predito = []
 
-for elemento in test_y_wbc:
-    total_wbc = total_wbc + elemento
+def getContadores(path):
+    arquivo = open(path, "r")
+    linhas = arquivo.readlines()
+    count_wbc = int(linhas[1].replace("\n", ""))
+    count_rbc = int(linhas[3].replace("\n", ""))
+    count_platelets = int(linhas[5].replace("\n", ""))
+    count = [count_wbc, count_rbc, count_platelets]      
+    return count
 
-for elemento in test_y_rbc:
-    total_rbc = total_rbc + elemento
+for arquivo in os.listdir(info_dir):
+    contadores_predito.append(getContadores(info_dir + arquivo))
 
-for elemento in test_y_platelets:
-    total_platelets = total_platelets + elemento
-
-acertos_wbc = 0
-acertos_rbc = 0
-acertos_platelets = 0
-
-erros_wbc = 0
-erros_rbc = 0
-erros_platelets = 0
-
-for i in range(0, len(test_y_wbc)):
-    erros_wbc = test_y_wbc[i] - predict_y_wbc[i]
-
-    if predict_y_wbc[i] > test_y_wbc[i]:
-        acertos_wbc = test_y_wbc[i]
-    else:
-        acertos_wbc = predict_y_wbc[i]
-
-for i in range(0, len(test_y_rbc)):
-    erros_rbc = test_y_rbc[i] - predict_y_rbc[i]
-
-    if predict_y_rbc[i] > test_y_rbc[i]:
-        acertos_rbc = test_y_rbc[i]
-    else:
-        acertos_rbc = predict_y_rbc[i]
-
-for i in range(0, len(test_y_platelets)):
-    erros_platelets = test_y_platelets[i] - predict_y_platelets[i]
-
-    if predict_y_platelets[i] > test_y_platelets[i]:
-        acertos_platelets = test_y_platelets[i]
-    else:
-        acertos_platelets = predict_y_platelets[i]
-
-porc_acertos_wbc = (acertos_wbc/total_wbc) * 100
-porc_acertos_rbc = (acertos_rbc/total_rbc) * 100
-porc_acertos_platelets = (acertos_platelets/total_platelets) * 100
-
-porc_erros_wbc = (erros_wbc/total_wbc) * 100
-porc_erros_rbc = (erros_rbc/total_rbc) * 100
-porc_erros_platelets = (erros_platelets/total_wbc) * 100
-
-total_wbc = "Total WBC: " + str(total_wbc) + " (100%)"
-acertos_wbc = "Acertos WBC: " + str(acertos_wbc) + " (" + str(round(porc_acertos_wbc, 2)) + "%)"
-erros_wbc = "Erros WBC: " + str(erros_wbc) + " (" + str(round(porc_erros_wbc, 2)) + "%)"
-
-total_rbc = "Total RBC: " + str(total_rbc) + " (100%)"
-acertos_rbc = "Acertos RBC: " + str(acertos_rbc) + " (" + str(round(porc_acertos_rbc, 2)) + "%)"
-erros_rbc = "Erros RBC: " + str(erros_rbc) + " (" + str(round(porc_erros_rbc, 2)) + "%)"
-
-total_platelets = "Total Platelets: " + str(total_platelets) + " (100%)"
-acertos_platelets = "Acertos Platelets: " + str(acertos_platelets) + " (" + str(round(porc_acertos_platelets, 2)) + "%)"
-erros_platelets = "Erros Platelets: " + str(erros_platelets) + " (" + str(round(porc_erros_platelets, 2)) + "%)"
-
-print(total_wbc)
-print(acertos_wbc)
-print(erros_wbc)
 print()
+print(contadores_predito[teste])
 
-print(total_rbc)
-print(acertos_rbc)
-print(erros_rbc)
-print()
+def calculaGeral(contadores):
+    count_wbc = 0
+    count_rbc = 0
+    count_platelets = 0
 
-print(total_platelets)
-print(acertos_platelets)
-print(erros_platelets)
+    for elemento in contadores:
+        count_wbc = count_wbc + elemento[0]
+        count_rbc = count_rbc + elemento[1]
+        count_platelets = count_platelets + elemento[2]
+
+    return [count_wbc, count_rbc, count_platelets]
+
+print("Contadores Teste:", calculaGeral(contadores_teste))
+print("Contadores Predito:", calculaGeral(contadores_predito))
+
+contador_teste = calculaGeral(contadores_teste)
+contador_predito = calculaGeral(contadores_predito)
+
+wbc_total = contador_teste[0]
+rbc_total = contador_teste[1]
+platelets_total = contador_teste[2]
+
+wbc_encontrados = contador_predito[0]
+rbc_encontrados = contador_predito[1]
+platelets_encontrados = contador_predito[2]
+
+wbc_porcentagem = (wbc_encontrados / wbc_total) * 100
+rbc_porcentagem = (rbc_encontrados / rbc_total) * 100
+platelets_porcentagem = (platelets_encontrados / platelets_total) * 100
+
+def preparaString(total, encontrados, porcentagem):
+    total = str(total)
+    encontrados = str(encontrados)
+    porcentagem = str(round(porcentagem, 2))
+
+    string = ""
+    string = string + "Total: " + total + "\n"
+    string = string + "Encontrados: " + encontrados + "\n"
+    string = string + "Porcentagem: " + encontrados + "/" + total + " (" + porcentagem + "%)"  + "\n"
+
+    return string
+
 
 arquivo = open("relatorio-multiple.txt", "w")
-arquivo.write(total_wbc + "\n")
-arquivo.write(acertos_wbc + "\n")
-arquivo.write(erros_wbc + "\n")
-arquivo.write("\n")
-arquivo.write(total_rbc + "\n")
-arquivo.write(acertos_rbc + "\n")
-arquivo.write(erros_rbc + "\n")
-arquivo.write("\n")
-arquivo.write(total_platelets + "\n")
-arquivo.write(acertos_platelets + "\n")
-arquivo.write(erros_platelets + "\n")
-arquivo.write("\n")
-arquivo.close()
+
+print("WBC")
+arquivo.write("WBC\n")
+wbc = preparaString(wbc_total, wbc_encontrados, wbc_porcentagem)
+print(wbc)
+arquivo.write(wbc)
+
+print("RBC")
+arquivo.write("\nRBC\n")
+rbc = preparaString(rbc_total, rbc_encontrados, rbc_porcentagem)
+print(rbc)
+arquivo.write(rbc)
+
+print("Platelets")
+arquivo.write("\nPlatelets\n")
+platelets = preparaString(platelets_total, platelets_encontrados, platelets_porcentagem)
+print(platelets)
+arquivo.write(platelets)
