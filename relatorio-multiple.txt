@@ -1,14 +1,14 @@
 WBC
 Total: 74
-Encontrados: 26
-Porcentagem: 26/74 (35.14%)
+Encontrados: 55
+Porcentagem: 55/74 (74.32%)
 
 RBC
 Total: 908
-Encontrados: 896
-Porcentagem: 896/908 (98.68%)
+Encontrados: 591
+Porcentagem: 591/908 (65.09%)
 
 Platelets
 Total: 59
-Encontrados: 2
-Porcentagem: 2/59 (3.39%)
+Encontrados: 62
+Porcentagem: 62/59 (105.08%)
