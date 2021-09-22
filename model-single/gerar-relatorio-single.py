@@ -33,16 +33,6 @@ def infoCelulas(arquivo):
 
     return celulas
 
-coordenadas_dir = "./model-single/dataset-single/test/coordenadas/"
-celulas_arq = []
-
-teste = 0
-
-for arquivo in os.listdir(coordenadas_dir):
-    celulas_arq.append(infoCelulas(coordenadas_dir + arquivo))
-
-print(celulas_arq[teste])
-
 def contador(celulas_arq):
     count_wbc = 0
     count_rbc = 0
@@ -61,16 +51,6 @@ def contador(celulas_arq):
         
     return count
 
-print(contador(celulas_arq[teste]))
-
-contadores_teste = []
-
-for elemento in celulas_arq:
-    contadores_teste.append(contador(elemento))
-
-info_dir = "./model-single/results-single/info/"
-contadores_predito = []
-
 def getContadores(path):
     arquivo = open(path, "r")
     linhas = arquivo.readlines()
@@ -79,12 +59,6 @@ def getContadores(path):
     count_platelets = int(linhas[5].replace("\n", ""))
     count = [count_wbc, count_rbc, count_platelets]      
     return count
-
-for arquivo in os.listdir(info_dir):
-    contadores_predito.append(getContadores(info_dir + arquivo))
-
-print()
-print(contadores_predito[teste])
 
 def calculaGeral(contadores):
     count_wbc = 0
@@ -97,24 +71,6 @@ def calculaGeral(contadores):
         count_platelets = count_platelets + elemento[2]
 
     return [count_wbc, count_rbc, count_platelets]
-
-print("Contadores Teste:", calculaGeral(contadores_teste))
-print("Contadores Predito:", calculaGeral(contadores_predito))
-
-contador_teste = calculaGeral(contadores_teste)
-contador_predito = calculaGeral(contadores_predito)
-
-wbc_total = contador_teste[0]
-rbc_total = contador_teste[1]
-platelets_total = contador_teste[2]
-
-wbc_encontrados = contador_predito[0]
-rbc_encontrados = contador_predito[1]
-platelets_encontrados = contador_predito[2]
-
-wbc_porcentagem = (wbc_encontrados / wbc_total) * 100
-rbc_porcentagem = (rbc_encontrados / rbc_total) * 100
-platelets_porcentagem = (platelets_encontrados / platelets_total) * 100
 
 def preparaString(total, encontrados, porcentagem):
     total = str(total)
@@ -129,22 +85,61 @@ def preparaString(total, encontrados, porcentagem):
     return string
 
 
-arquivo = open("./model-single/results-single/relatorio-single.txt", "w")
 
-print("WBC")
-arquivo.write("WBC\n")
-wbc = preparaString(wbc_total, wbc_encontrados, wbc_porcentagem)
-print(wbc)
-arquivo.write(wbc)
 
-print("RBC")
-arquivo.write("\nRBC\n")
-rbc = preparaString(rbc_total, rbc_encontrados, rbc_porcentagem)
-print(rbc)
-arquivo.write(rbc)
+resultados_dir = "./model-single/results-single/"
+todos_resultados = []
 
-print("Platelets")
-arquivo.write("\nPlatelets\n")
-platelets = preparaString(platelets_total, platelets_encontrados, platelets_porcentagem)
-print(platelets)
-arquivo.write(platelets)
+for pasta in os.listdir(resultados_dir):
+    todos_resultados.append(resultados_dir + pasta)
+
+coordenadas_dir = "./model-single/dataset-single/test/coordenadas/"
+celulas_arq = []
+
+for arquivo in os.listdir(coordenadas_dir):
+    celulas_arq.append(infoCelulas(coordenadas_dir + arquivo))
+
+contadores_teste = []
+
+for elemento in celulas_arq:
+    contadores_teste.append(contador(elemento))
+
+for resultado in todos_resultados:   
+    print(resultado) 
+
+    info_dir = resultado + "/info/"
+    contadores_predito = []
+
+    for arquivo in os.listdir(info_dir):
+        contadores_predito.append(getContadores(info_dir + arquivo))
+
+    print("Contadores Teste:", calculaGeral(contadores_teste))
+    print("Contadores Predito:", calculaGeral(contadores_predito))
+
+    contador_teste = calculaGeral(contadores_teste)
+    contador_predito = calculaGeral(contadores_predito)
+
+    wbc_total = contador_teste[0]
+    rbc_total = contador_teste[1]
+    platelets_total = contador_teste[2]
+
+    wbc_encontrados = contador_predito[0]
+    rbc_encontrados = contador_predito[1]
+    platelets_encontrados = contador_predito[2]
+
+    wbc_porcentagem = (wbc_encontrados / wbc_total) * 100
+    rbc_porcentagem = (rbc_encontrados / rbc_total) * 100
+    platelets_porcentagem = (platelets_encontrados / platelets_total) * 100
+
+    arquivo = open(resultado + "/relatorio-single.txt", "w")
+    arquivo.write("WBC\n")
+    wbc = preparaString(wbc_total, wbc_encontrados, wbc_porcentagem)
+    arquivo.write(wbc)
+
+    arquivo.write("\nRBC\n")
+    rbc = preparaString(rbc_total, rbc_encontrados, rbc_porcentagem)
+    arquivo.write(rbc)
+
+    arquivo.write("\nPlatelets\n")
+    platelets = preparaString(platelets_total, platelets_encontrados, platelets_porcentagem)
+    arquivo.write(platelets)
