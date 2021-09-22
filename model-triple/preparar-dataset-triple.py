@@ -3,22 +3,6 @@ from shutil import copyfile
 from bs4 import BeautifulSoup as bs
 
 
-def encontraWBC(arquivo):
-    content = []
-    with open(arquivo, "r") as file:
-        content = file.readlines()
-        content = "".join(content)
-        bs_content = bs(content, "lxml")
-        lista_objetos = bs_content.find_all("object")
-
-        for objeto in lista_objetos:
-            nome = objeto.find("name")
-            if "WBC" in nome:
-                return True
-
-    return False
-
-
 imagens_dir = 'bccd/BCCD/JPEGImages/'
 coordenadas_dir = 'bccd/BCCD/Annotations/'
 
@@ -56,18 +40,13 @@ print(tupla[0])
 
 print("Preparando imagens de treino...")
 for grupo in tupla[:tamanho_treino]:
-    if(encontraWBC(grupo[2])):
-        copyfile(grupo[1], "./model-triple/dataset-triple/train/imagens/" + grupo[0] + ".jpg")
-        copyfile(grupo[2], "./model-triple/dataset-triple/train/coordenadas/" + grupo[0] + ".xml")
-    else:
-        print("WBC nao encontrada na imagem:", grupo[0])
+    copyfile(grupo[1], "./model-triple/dataset-triple/train/imagens/" + grupo[0] + ".jpg")
+    copyfile(grupo[2], "./model-triple/dataset-triple/train/coordenadas/" + grupo[0] + ".xml")
 
 print("Preparando imagens de teste...")
-for grupo in tupla[tamanho_treino:]:
-    if(encontraWBC(grupo[2])):
-        copyfile(grupo[1], "./model-triple/dataset-triple/test/imagens/" + grupo[0] + ".jpg")
-        copyfile(grupo[2], "./model-triple/dataset-triple/test/coordenadas/" + grupo[0] + ".xml")
-    else:
-        print("WBC nao encontrada na imagem:", grupo[0])
+for grupo in tupla[tamanho_treino:]: 
+    copyfile(grupo[1], "./model-triple/dataset-triple/test/imagens/" + grupo[0] + ".jpg")
+    copyfile(grupo[2], "./model-triple/dataset-triple/test/coordenadas/" + grupo[0] + ".xml")
+    
 
 print("Dataset carregado com sucesso")
