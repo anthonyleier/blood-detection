@@ -64,14 +64,33 @@ for arquivo in os.listdir(coordenadas_dir):
 tupla = zip(imagens_path, coordenadas_path)
 tupla = tuple(tupla)
 
+print("Criando pastas...")
+
+imagens_train_dir = "./model-single/dataset-single/train/imagens/"
+coordenadas_train_dir = "./model-single/dataset-single/train/coordenadas/"
+imagens_test_dir = "./model-single/dataset-single/test/imagens/"
+coordenadas_test_dir = "./model-single/dataset-single/test/coordenadas/"
+
+if not os.path.isdir(imagens_train_dir):
+    os.makedirs(imagens_train_dir)    
+
+if not os.path.isdir(coordenadas_train_dir):
+    os.makedirs(coordenadas_train_dir)   
+
+if not os.path.isdir(imagens_test_dir):
+    os.makedirs(imagens_test_dir)    
+
+if not os.path.isdir(coordenadas_test_dir):
+    os.makedirs(coordenadas_test_dir)
+
 contador = 0
 print("Preparando imagens de treino...")
 for imagem_path, coordenada_path in tupla[:tamanho_treino]:
     celulas = infoCelulas(coordenada_path)
     for celula in celulas:
         nome = "cell_" + str(contador)
-        copyfile(imagem_path, f"./model-single/dataset-single/train/imagens/{nome}.jpg")
-        arquivo = open(f"./model-single/dataset-single/train/coordenadas/{nome}.txt", "w")
+        copyfile(imagem_path, imagens_train_dir + nome + ".jpg")
+        arquivo = open(coordenadas_train_dir + nome + ".txt", "w")
         arquivo.write(str(celula[0]) + "\n")
         arquivo.write(str(celula[1]) + "\n")
         arquivo.write(str(celula[2]) + "\n")
@@ -83,8 +102,8 @@ contador = 0
 print("Preparando imagens de teste...")
 for imagem_path, coordenada_path in tupla[tamanho_treino:]:
     nome = "cell_" + str(contador)
-    copyfile(imagem_path, f"./model-single/dataset-single/test/imagens/{nome}.jpg")
-    copyfile(coordenada_path, f"./model-single/dataset-single/test/coordenadas/{nome}.xml")
+    copyfile(imagem_path, imagens_test_dir + nome + ".jpg")
+    copyfile(coordenada_path, coordenadas_test_dir + nome + ".xml")
     contador = contador + 1
 
 print("Dataset carregado com sucesso")

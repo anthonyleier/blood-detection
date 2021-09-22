@@ -2,7 +2,6 @@ import os
 from shutil import copyfile
 from bs4 import BeautifulSoup as bs
 
-
 imagens_dir = 'bccd/BCCD/JPEGImages/'
 coordenadas_dir = 'bccd/BCCD/Annotations/'
 
@@ -38,15 +37,33 @@ tupla = zip(nomes, imagens_path, coordenadas_path)
 tupla = tuple(tupla)
 print(tupla[0])
 
+print("Criando pastas...")
+
+imagens_train_dir = "./model-triple/dataset-triple/train/imagens/"
+coordenadas_train_dir = "./model-triple/dataset-triple/train/coordenadas/"
+imagens_test_dir = "./model-triple/dataset-triple/test/imagens/"
+coordenadas_test_dir = "./model-triple/dataset-triple/test/coordenadas/"
+
+if not os.path.isdir(imagens_train_dir):
+    os.makedirs(imagens_train_dir)    
+
+if not os.path.isdir(coordenadas_train_dir):
+    os.makedirs(coordenadas_train_dir)   
+
+if not os.path.isdir(imagens_test_dir):
+    os.makedirs(imagens_test_dir)    
+
+if not os.path.isdir(coordenadas_test_dir):
+    os.makedirs(coordenadas_test_dir)    
+
 print("Preparando imagens de treino...")
-for grupo in tupla[:tamanho_treino]:
-    copyfile(grupo[1], "./model-triple/dataset-triple/train/imagens/" + grupo[0] + ".jpg")
-    copyfile(grupo[2], "./model-triple/dataset-triple/train/coordenadas/" + grupo[0] + ".xml")
+for nome, imagem_path, coordenadas_path in tupla[:tamanho_treino]:
+    copyfile(imagem_path, imagens_train_dir + nome + ".jpg")
+    copyfile(coordenadas_path, coordenadas_train_dir + nome + ".xml")
 
 print("Preparando imagens de teste...")
-for grupo in tupla[tamanho_treino:]: 
-    copyfile(grupo[1], "./model-triple/dataset-triple/test/imagens/" + grupo[0] + ".jpg")
-    copyfile(grupo[2], "./model-triple/dataset-triple/test/coordenadas/" + grupo[0] + ".xml")
+for nome, imagem_path, coordenadas_path in tupla[tamanho_treino:]: 
+    copyfile(imagem_path, imagens_test_dir + nome + ".jpg")
+    copyfile(coordenadas_path, coordenadas_test_dir + nome + ".xml")
     
-
 print("Dataset carregado com sucesso")
