@@ -1,9 +1,7 @@
 /bccd
-/dataset-single
-/dataset-multiple
-/duck
+/example-duck/model
+/model-single/dataset-single
+/model-triple/dataset-triple
 /models
-/results
 /tensorflow
-/archive
-/reuniao
+/extra

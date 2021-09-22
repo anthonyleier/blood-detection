@@ -1,0 +1,6 @@
+WBC
+0
+RBC
+36
+Platelets
+0
