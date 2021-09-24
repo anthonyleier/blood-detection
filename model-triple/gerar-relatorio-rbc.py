@@ -79,6 +79,9 @@ for resultado in todos_resultados:
     print(erros)
 
     arquivo = open(resultado + "/relatorio-rbc.txt", "w")
+    arquivo.write("Relatório Novo")
+    arquivo.write()
+    arquivo.write("################ RELATÓRIO ANTIGO ################")
     arquivo.write(total + "\n")
     arquivo.write(acertos + "\n")
     arquivo.write(erros + "\n")

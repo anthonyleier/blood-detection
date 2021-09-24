@@ -40,6 +40,10 @@ for resultado in todos_resultados:
     predict_y = []
     nomes = []
 
+    # Valores absolutos para relatório novo
+    encontradas_absoluto = 0
+    reais_absoluto = 0
+
     for arquivo in os.listdir(coordenadas_dir):
         nomes.append(arquivo.replace(".xml", ""))
 
@@ -51,9 +55,11 @@ for resultado in todos_resultados:
 
     for arquivo in coordenadas_path:
         test_y.append(contarCelulasXML(arquivo))
+        reais_absoluto = reais_absoluto + contarCelulasXML(arquivo)
 
     for arquivo in dados_path:
         predict_y.append(coletarContagemTXT(arquivo))
+        encontradas_absoluto = encontradas_absoluto + coletarContagemTXT(arquivo)
 
     total = len(test_y)
     acertos = 0
@@ -79,6 +85,8 @@ for resultado in todos_resultados:
     print(erros)
 
     arquivo = open(resultado + "/relatorio-wbc.txt", "w")
+    arquivo.write(str(encontradas_absoluto) + "/" + str(reais_absoluto) + "\n")
+    arquivo.write("################ RELATÓRIO ANTIGO ################" + "\n")
     arquivo.write(total + "\n")
     arquivo.write(acertos + "\n")
     arquivo.write(erros + "\n")

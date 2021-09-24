@@ -79,6 +79,7 @@ for resultado in todos_resultados:
     print(erros)
 
     arquivo = open(resultado + "/relatorio-platelets.txt", "w")
+    arquivo.write("################ RELATÓRIO ANTIGO ################")
     arquivo.write(total + "\n")
     arquivo.write(acertos + "\n")
     arquivo.write(erros + "\n")
