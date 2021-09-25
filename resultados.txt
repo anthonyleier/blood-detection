@@ -1,0 +1,20 @@
+WBC
+24_0.02_500_0.5_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8
+Celulas reais: 74
+Celulas encontradas: 72
+Percentual: 97.3%
+Falha: 2.7%
+
+RBC
+24_0.1_500_0.1_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8
+Celulas reais: 908
+Celulas encontradas: 910
+Percentual: 100.22%
+Falha: 0.22%
+
+Platelets
+24_0.05_500_0.5_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8
+Celulas reais: 59
+Celulas encontradas: 64
+Percentual: 108.47%
+Falha: 8.47%

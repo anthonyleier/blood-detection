@@ -28,13 +28,14 @@ resultados_dir = "./model-triple/results-triple/"
 todos_resultados = []
 
 for pasta in os.listdir(resultados_dir):
-    todos_resultados.append(resultados_dir + pasta)
-    
-coordenadas_dir = "./model-triple/dataset-triple/test/coordenadas/"
-coordenadas_path = []
+    if dicionario[indice].lower() in os.listdir(resultados_dir + pasta):
+        todos_resultados.append(resultados_dir + pasta)
 
 for resultado in todos_resultados:   
     print(resultado)
+
+    coordenadas_dir = "./model-triple/dataset-triple/test/coordenadas/"
+    coordenadas_path = []
 
     dados_dir = resultado + "/" + dicionario[indice].lower() + "/info/"
     dados_path = []
@@ -69,7 +70,7 @@ for resultado in todos_resultados:
     total = len(test_y)
     acertos = 0
     erros = 0
-
+    
     for i in range(0, len(test_y)):
         acertou = test_y[i] == predict_y[i]
         if acertou:
