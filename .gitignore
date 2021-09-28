@@ -8,3 +8,7 @@
 /models
 /tensorflow
 /extra
+*/__pycache__/
+/model-triple/checkpoint
+/model-triple/checkpoint-1.data-00000-of-00001
+/model-triple/checkpoint-1.index
