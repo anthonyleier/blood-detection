@@ -62,15 +62,19 @@ fakebox_predictor = tf.compat.v2.train.Checkpoint(_base_tower_layers_for_heads=m
                                                   _box_prediction_head=model._box_predictor._box_prediction_head)
 fake_model = tf.compat.v2.train.Checkpoint(
     _feature_extractor=model._feature_extractor, _box_predictor=fakebox_predictor)
-
+    
+# print(model.weights)
 checkpoint = tf.compat.v2.train.Checkpoint(model=fake_model)
 checkpoint.restore(checkpoint_path).expect_partial()
+
 
 # image, shapes = model.preprocess(tf.zeros([1, 640, 640, 3]))
 # prediction_dict = model.predict(image, shapes)
 # _ = model.postprocess(prediction_dict, shapes)
 
+# model = tf.saved_model.load("./model-triple/batata")
 print('Pesos restaurados!')
+
 
 
 test_image_dir = './model-triple/dataset-triple/test/imagens/'
