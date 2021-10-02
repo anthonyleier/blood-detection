@@ -11,6 +11,7 @@ from object_detection.builders import model_builder
 from PIL import Image, ImageDraw
 
 # Informações
+st.set_page_config(layout="wide")
 st.header("Object Detection Aplicado em Células Sanguíneas")
 st.write('O modelo de Deep Learning foi treinado utilizando o <a href="https://github.com/Shenggan/BCCD_Dataset" target="_blank">BCCD Dataset</a>, para fins de teste deve-se utilizar imagens dessa fonte.', unsafe_allow_html=True)
 
