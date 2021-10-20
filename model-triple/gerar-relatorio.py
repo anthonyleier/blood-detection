@@ -1,8 +1,7 @@
 import os
 from bs4 import BeautifulSoup as bs
 
-dicionario = ["WBC", "RBC", "Platelets"]
-indice = 2
+celulaName = input("Digite a celula para gerar o relatorio:")
 
 def calcularMSE(test_y, predict_y):
     diferenca = test_y - predict_y
@@ -19,7 +18,7 @@ def contarCelulasXML(arquivo):
 
         for objeto in lista_objetos:
             nome = objeto.find("name")
-            if dicionario[indice] in nome:
+            if celulaName in nome:
                 contador = contador + 1
 
     return int(contador)
@@ -28,20 +27,20 @@ def coletarContagemTXT(path):
     arquivo = open(path, "r")
     return int(arquivo.readlines()[1])
 
-resultados_dir = "./model-triple/results-triple/"
+resultados_dir = "./results-triple/"
 todos_resultados = []
 
 for pasta in os.listdir(resultados_dir):
-    if dicionario[indice].lower() in os.listdir(resultados_dir + pasta):
+    if celulaName.lower() in os.listdir(resultados_dir + pasta):
         todos_resultados.append(resultados_dir + pasta)
 
 for resultado in todos_resultados:   
     print(resultado)
 
-    coordenadas_dir = "./model-triple/dataset-triple/test/coordenadas/"
+    coordenadas_dir = "./dataset-triple/test/coordenadas/"
     coordenadas_path = []
 
-    dados_dir = resultado + "/" + dicionario[indice].lower() + "/info/"
+    dados_dir = resultado + "/" + celulaName.lower() + "/info/"
     dados_path = []
 
     # Relatório Antigo
@@ -92,24 +91,24 @@ for resultado in todos_resultados:
 
     total_mse = []
     # Relatório Novo
-    arquivo = open(resultado + "/relatorio-" + dicionario[indice].lower() + ".txt", "w")
+    arquivo = open(resultado + "/relatorio-" + celulaName.lower() + ".txt", "w")
     arquivo.write("Relatorio de Performance do Modelo" + "\n")
     arquivo.write("Celulas reais: " + str(reais_absoluto) + "\n")
     arquivo.write("Celulas encontradas: " + str(encontradas_absoluto) + "\n")
     arquivo.write("Percentual: " + str(round((encontradas_absoluto/reais_absoluto)*100, 2)) + "%" + "\n")
     arquivo.write("Falha: " + str(abs(round((1 - (encontradas_absoluto/reais_absoluto))*100, 2))) + "%" + "\n")
     arquivo.write("\n\n")
-    arquivo.write("Quantidade real" + " - " + "Quantidade prevista" + " - " + "Nome do arquivo" + "MSE" + "\n")
+    arquivo.write("Quantidade real" + " - " + "Quantidade prevista" + " - " + "Nome do arquivo" + " - " + "MSE" + "\n")
     for i in range(0, len(test_y)):
         mse = calcularMSE(test_y[i], predict_y[i])
         total_mse.append(mse)
-        arquivo.write(str(str(test_y[i]) + " - " + str(predict_y[i]) + " - " + str(nomes[i])) + mse + "\n")
+        arquivo.write(str(str(test_y[i]) + " - " + str(predict_y[i]) + " - " + str(nomes[i])) + " - " + str(mse) + "\n")
 
     soma_mse = 0
     for mse in total_mse:
         soma_mse += mse
     
     media_mse = soma_mse / len(total_mse)
-    arquivo.write("MSE: " + media_mse)
-    arquivo.write("rMSE: " + media_mse**0.5)
+    arquivo.write("MSE: " + str(media_mse) + "\n")
+    arquivo.write("rMSE: " + str(media_mse**0.5) + "\n")
     arquivo.close()
