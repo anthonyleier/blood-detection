@@ -4,6 +4,10 @@ from bs4 import BeautifulSoup as bs
 dicionario = ["WBC", "RBC", "Platelets"]
 indice = 2
 
+def calcularMSE(test_y, predict_y):
+    diferenca = test_y - predict_y
+    return diferenca**2
+
 def contarCelulasXML(arquivo):
     contador = 0
     content = []
@@ -86,6 +90,7 @@ for resultado in todos_resultados:
     acertos = "Acertos: " + str(acertos) + " (" + str(round(porc_acertos, 2)) + "%)"
     erros = "Erros: " + str(erros) + " (" + str(round(porc_erros, 2)) + "%)"
 
+    total_mse = []
     # Relatório Novo
     arquivo = open(resultado + "/relatorio-" + dicionario[indice].lower() + ".txt", "w")
     arquivo.write("Relatorio de Performance do Modelo" + "\n")
@@ -94,7 +99,17 @@ for resultado in todos_resultados:
     arquivo.write("Percentual: " + str(round((encontradas_absoluto/reais_absoluto)*100, 2)) + "%" + "\n")
     arquivo.write("Falha: " + str(abs(round((1 - (encontradas_absoluto/reais_absoluto))*100, 2))) + "%" + "\n")
     arquivo.write("\n\n")
-    arquivo.write("Quantidade real" + " - " + "Quantidade prevista" + " - " + "Nome do arquivo" + "\n")
+    arquivo.write("Quantidade real" + " - " + "Quantidade prevista" + " - " + "Nome do arquivo" + "MSE" + "\n")
     for i in range(0, len(test_y)):
-        arquivo.write(str(str(test_y[i]) + " - " + str(predict_y[i]) + " - " + str(nomes[i])) + "\n")
+        mse = calcularMSE(test_y[i], predict_y[i])
+        total_mse.append(mse)
+        arquivo.write(str(str(test_y[i]) + " - " + str(predict_y[i]) + " - " + str(nomes[i])) + mse + "\n")
+
+    soma_mse = 0
+    for mse in total_mse:
+        soma_mse += mse
+    
+    media_mse = soma_mse / len(total_mse)
+    arquivo.write("MSE: " + media_mse)
+    arquivo.write("rMSE: " + media_mse**0.5)
     arquivo.close()
