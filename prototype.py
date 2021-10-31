@@ -91,7 +91,7 @@ def processar(nome, pasta_base, porcentagem_acerto):
     return {"imagem": imagem_pronta, "contador": contador}
 
 wbc_model_path = "./model-triple/results-triple/24_0.02_500_0.5_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/wbc/model"
-rbc_model_path = "./model-triple/results-triple/24_0.1_500_0.1_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/rbc/model"
+rbc_model_path = "./model-triple/results-triple/24_0.05_500_0.1_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/rbc/model"
 platelets_model_path = "./model-triple/results-triple/24_0.05_500_0.5_ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/platelets/model"
 
 col1, col2, col3 = st.columns(3)
